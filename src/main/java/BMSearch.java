@@ -1,6 +1,8 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 
 
 /*
@@ -117,6 +119,8 @@ public class BMSearch {
     public static void search(BMTable table, String filename) throws IOException {
         // create a new BufferedReader to read from the file
         BufferedReader reader = new BufferedReader(new FileReader(filename));
+        // create a new BufferedWriter to write to stdout
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
         // get the search string from the BMTable object
         String searchString = table.getSearchString();
         // get the length of the search string
@@ -151,8 +155,8 @@ public class BMSearch {
                 }
                 // if we don't have to skip, we have a full match
                 if (skipAmount == 0) {
-                    // print the line
-                    System.out.println(line);
+                    // write the line to stdout
+                    writer.write(line + "\n");
                     // stop searching this line
                     break;
                 }
@@ -162,5 +166,7 @@ public class BMSearch {
         }
         // close the reader
         reader.close();
+        // close the writer
+        writer.close();
     }
 }

@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Arrays; 
 
 /*
  * MakeBMTable creates a skip table on a given string
@@ -22,9 +24,15 @@ public class MakeBMTable {
         // Find all the unique letters in the string
         // Find the number of unique letters in the string (numUniqueLetters)
         // Create numUniqueLetters + 1 number of arrays, array length initial string
-        ArrayList<String> uniqueLetters = findAllUniqueLetters(stringToSearch);
+        ArrayList<Character> uniqueLetters = findAllUniqueLetters(stringToSearch);
         // Create empty skip table
         SkipTable skipTable = new SkipTable(stringToSearch, uniqueLetters);
+        skipTable.buildEmptyTable();
+
+        // DELETE LATER. Testing empty table
+        for(int i = 0; i < skipTable.getNumRowsInTable(); i++){
+            skipTable.getSkipTable().get(i).printRow();
+        }
 
 
         // Fill table
@@ -44,11 +52,17 @@ public class MakeBMTable {
     }
 
     /*
-     * findAllUniqueLetters finds and returns a list of all the unique letters in a string
+     * findAllUniqueLetters finds and returns a list of all the unique letters in a passed in string
      */
-    public static ArrayList<String> findAllUniqueLetters(String stringToSearch){
-        ArrayList<String> uniqueLettersList = new ArrayList<>();
-        // TODO : Return unique letters list properly
+    public static ArrayList<Character> findAllUniqueLetters(String stringToSearch){
+        // Go through stringToSearch, put each into hash map
+        HashMap<Character, Character> hashMap = new HashMap<>();
+        for(int i = 0; i < stringToSearch.length(); i++){
+            Character c = stringToSearch.charAt(i);
+            hashMap.put(c, c);
+        }
+        // Turn hashmap into list, return the list
+        ArrayList<Character> uniqueLettersList = new ArrayList<Character>(hashMap.values());
         return uniqueLettersList;
     }
 }

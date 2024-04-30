@@ -41,16 +41,23 @@ public class BMSearch {
         // create a new BMTable object with the search string
         BMTable table = new BMTable(searchString);
         // now read the rest of the file to populate the table
-        String line;
+        // we have two line variables so we can process the final line separately
+        String nextLine = reader.readLine();
+        String line = nextLine;
         // read each line of the BMTable file
-        while ((line = reader.readLine()) != null) {
+        while ((nextLine = reader.readLine()) != null) {
             // get the key (first character of the line)
             char key = line.charAt(0);
             // get the skip amounts from the line
             int[] skipAmounts = parseSkipAmounts(line);
             // set the skip amounts in the table
             table.setSkipAmounts(key, skipAmounts);
+            // set the line to the next line
+            line = nextLine;
         }
+        // final line, set the default row's skip amounts
+        int[] skipAmounts = parseSkipAmounts(line);
+        table.getDefaultRow().setSkipAmounts(skipAmounts);
         // close the reader
         reader.close();
         // return the BMTable object

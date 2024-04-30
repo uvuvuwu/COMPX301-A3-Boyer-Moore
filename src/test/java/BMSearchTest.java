@@ -118,4 +118,22 @@ public class BMSearchTest {
         String[] actualLines = outContent.toString().split("\\r?\\n");
         assertEquals(374, actualLines.length);
     }
+
+    @Test
+    public void testSearchAsterisk() throws IOException {
+        BMTable table = BMSearch.createBMTable("src/test/resources/asterisk.txt");
+        // need to capture lines printed to stdout
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        // search for the string in MobyDick.txt
+        BMSearch.search(table, "src/test/resources/asteriskSearchText.txt");
+        // check the output
+        String[] expectedLines = {
+            "hijk a*c d",
+            "a*c defghi"
+        };
+        String[] actualLines = outContent.toString().split("\\r?\\n");
+        assertEquals(2, actualLines.length);
+        assertArrayEquals(expectedLines, actualLines);
+    }
 }

@@ -1,0 +1,7 @@
+hello!
+this is some text
+abc
+abcd efg
+hijk a*c d
+abcde
+a*c defghi

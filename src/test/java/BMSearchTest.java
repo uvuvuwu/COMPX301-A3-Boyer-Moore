@@ -103,4 +103,19 @@ public class BMSearchTest {
         assertEquals(4, actualLines.length);
         assertArrayEquals(expectedLines, actualLines);
     }
+
+    @Test
+    public void testSearchToo() throws IOException {
+        BMTable table = BMSearch.createBMTable("src/test/resources/too.txt");
+        // need to capture lines printed to stdout
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        // search for the string in MobyDick.txt
+        BMSearch.search(table, "src/test/resources/MobyDick.txt");
+        // check the output
+        // since there are so many, we won't list them here
+        // but we can verify the count (374)
+        String[] actualLines = outContent.toString().split("\\r?\\n");
+        assertEquals(374, actualLines.length);
+    }
 }

@@ -80,11 +80,20 @@ public class BMTable {
         return this.table.getOrDefault(key, this.defaultSkipRow);
     }
 
+
     /* 
      * Get the default row for characters not in the search string
      * @return: The default row
      */
     public BMTableRow getDefaultRow() {
         return this.defaultSkipRow;
+    }
+
+
+    /*
+     * Get the search string
+     */
+    public String getSearchString() {
+        return this.searchString;
     }
 }

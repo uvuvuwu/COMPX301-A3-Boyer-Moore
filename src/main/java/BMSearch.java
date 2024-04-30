@@ -9,16 +9,24 @@ public class BMSearch {
             System.out.println("Usage: java BMSearch <BMTable.txt> <SearchFile.txt>");
             System.exit(1);
         }
-        String BMTableName = args[0];
-        String SearchFileName = args[1];
+        BMTable table = createBMTable(args[0]);
 
-        BufferedReader BMTableReader = new BufferedReader(new FileReader(BMTableName));
-        String searchString = parseSearchString(BMTableReader.readLine());
+        // TODO: read the search file and search for the search string
+        // ...
+    }
+
+
+    public static BMTable createBMTable(String BMTableFilename) throws IOException {
+        // create a new BufferedReader to read from the BMTable file
+        BufferedReader reader = new BufferedReader(new FileReader(BMTableFilename));
+        // get the search string from the first line of the BMTable file
+        String searchString = parseSearchString(reader.readLine());
+        // create a new BMTable object with the search string
         BMTable table = new BMTable(searchString);
         // now read the rest of the file to populate the table
         String line;
         // read each line of the BMTable file
-        while ((line = BMTableReader.readLine()) != null) {
+        while ((line = reader.readLine()) != null) {
             // get the key (first character of the line)
             char key = line.charAt(0);
             // get the skip amounts from the line
@@ -26,10 +34,10 @@ public class BMSearch {
             // set the skip amounts in the table
             table.setSkipAmounts(key, skipAmounts);
         }
-        BMTableReader.close();
-
-        // TODO: read the search file and search for the search string
-        // ...
+        // close the reader
+        reader.close();
+        // return the BMTable object
+        return table;
     }
 
 
@@ -69,7 +77,7 @@ public class BMSearch {
         int[] skipAmounts = new int[splitString.length - 1];
         // For each element in the split array, parse it as an integer and add it to the char array
         for (int i = 1; i < splitString.length; i++) {
-            skipAmounts[i] = Integer.parseInt(splitString[i]);
+            skipAmounts[i - 1] = Integer.parseInt(splitString[i]);
         }
         // Return the char array
         return skipAmounts;

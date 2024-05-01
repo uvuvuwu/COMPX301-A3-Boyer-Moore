@@ -64,14 +64,13 @@ public class SkipTable {
      * fillColumn fills column 'column' in the skip table 
      */
     public void fillColumn(int column, int maxNumToSkip){
-        // TODO complete fillColumn
-
         // When going down a column, check:
         // if current string(character) match what we’re looking for, input 0
         // if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
         // if current substring has no earlier instances of same substring, skip by max number to skip
 
         String currSubString = "";
+        boolean hasInput = false;
 
         for(int i = 0; i < tableRows.size(); i++){
             SkipTableRow tableRow = tableRows.get(i);
@@ -80,29 +79,60 @@ public class SkipTable {
                 int[] row = tableRow.getRow();
                 row[column] = 0;
                 tableRow.setRow(row);
+                hasInput = true;
             }
 
             // if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
             char currentLetter = tableRow.getRowCharacter();
             currSubString = updateCurrentSubString(currentLetter, column);
 
-            // Next TODO moveBackDistance
             int moveBackDistance = moveBackDistance(currSubString);
+            // if current substring has no earlier instances of same substring, skip by max number to skip
+            if(moveBackDistance == -1 && hasInput == false){
+                int[] row = tableRow.getRow();
+                row[column] = maxNumToSkip;
+                tableRow.setRow(row);
+                hasInput = true;
+            }
+            // else if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
+            else if(moveBackDistance > -1 && hasInput == false) {
+                int[] row = tableRow.getRow();
+                row[column] = moveBackDistance;
+                tableRow.setRow(row);
+                hasInput = true;
+            }
+            hasInput = false;
         }
     }
 
     public int calcMaxNumToSkip(){
         // TODO complete function
 
-        int maxNumToSkip = 0;
+        int maxNumToSkip = 6;
         return maxNumToSkip;
     }
 
     public int moveBackDistance(String currSubString){
-        // TODO complete function
-
         int moveBackDistance = 0;
-        return moveBackDistance;
+
+        // Take currsubstring, comparing against the substring at the index before current. 
+        // E.g. if current substring is at index 3, compare current substring with substring at index 2. 
+        // Keep comparing against index -= 1 until there is a substring match. However many spaces currsubstring went back by is the move back distance.
+        // If after entire loop there was no match, return movebackdistance of -1
+
+        // Calculate the number of columns to look through
+        int timesToLoopBy = stringToSearch.length() - currSubString.length();
+        // Loop through all the columns before current to compare substrings
+        for(int i = timesToLoopBy - 1; i >= 0; i--){
+            moveBackDistance++;
+            // Check if currsubstring equals substring at i
+            String stringToCheck = stringToSearch.substring(i, i + currSubString.length());
+            if(currSubString.equals(stringToCheck)){
+                return moveBackDistance;
+            }
+        }
+        
+        return -1;
     }
 
     /*

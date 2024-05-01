@@ -1,5 +1,11 @@
 # COMPX301-A3-Boyer-Moore
 
+### MakeBMTable
+
+Usage: `java MakeBMTable <String to find> <BMTable file name>`
+
+Generates a Boyer Moore skip table for BMSearch
+
 ### BMSearch
 
 Usage: `java BMSearch <BMTable.txt> <SearchFile.txt>`

@@ -39,6 +39,6 @@ public class SkipTableRow {
     }
 
     public void printRow(){
-        System.out.println(Arrays.toString(row));
+        System.out.println(rowCharacter + " " + Arrays.toString(row));
     }
 }

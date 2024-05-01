@@ -152,4 +152,12 @@ public class SkipTable {
         String currentSubString = currChar + endOfString;
         return currentSubString;
     }
+
+    public int getNumColums(){
+        return this.stringToSearch.length();
+    }
+
+    public String getStringToSearch(){
+        return this.stringToSearch;
+    }
 }

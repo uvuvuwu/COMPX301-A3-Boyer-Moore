@@ -1,6 +1,6 @@
 target/
 *.class
+SkipTableOutput.txt
 .vscode/
 MobyDick.txt
-SkipTableOutput.txt
 run.sh

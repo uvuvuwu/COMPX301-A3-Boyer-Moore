@@ -73,7 +73,7 @@ public class BMSearchTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         // search for the string in the file
-        BMSearch.search(table, "src/test/resources/kokakoSearchTest.txt");
+        BMSearch.search(table, "src/test/resources/kokakoSearchText.txt");
         // check the output
         String[] expectedLines = {
             "some kokako text goes here", 

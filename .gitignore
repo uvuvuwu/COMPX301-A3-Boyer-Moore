@@ -1,4 +1,6 @@
 target/
 *.class
-run.sh
 SkipTableOutput.txt
+.vscode/
+MobyDick.txt
+run.sh

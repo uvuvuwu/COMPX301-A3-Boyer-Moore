@@ -71,11 +71,29 @@ public class BMTable {
     }
 
 
+    /*
+     * Get the row for a given character
+     * @param key: The character key for the row
+     * @return: The BMTableRow object for the given character
+     */
+    public BMTableRow getRow(char key) {
+        return this.table.getOrDefault(key, this.defaultSkipRow);
+    }
+
+
     /* 
      * Get the default row for characters not in the search string
      * @return: The default row
      */
     public BMTableRow getDefaultRow() {
         return this.defaultSkipRow;
+    }
+
+
+    /*
+     * Get the search string
+     */
+    public String getSearchString() {
+        return this.searchString;
     }
 }

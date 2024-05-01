@@ -1,3 +1,6 @@
 target/
 *.class
 .vscode/
+MobyDick.txt
+SkipTableOutput.txt
+run.sh

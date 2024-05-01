@@ -6,12 +6,12 @@ import java.util.Arrays;
 public class SkipTableRow {
     private int rowLength;
     private char rowCharacter;
-    private char[] row;
+    private int[] row;
 
     public SkipTableRow(int rowLength, char rowCharacter){
         this.rowLength = rowLength;
         this.rowCharacter = rowCharacter;
-        this.row = new char[rowLength];
+        this.row = new int[rowLength];
     }
 
     public int getRowLength(){
@@ -22,7 +22,7 @@ public class SkipTableRow {
         this.rowLength = rowLength;
     }
 
-    public int getRowCharacter(){
+    public char getRowCharacter(){
         return this.rowCharacter;
     }
 
@@ -30,11 +30,11 @@ public class SkipTableRow {
         this.rowCharacter = rowCharacter;
     }
 
-    public char[] getRow(){
+    public int[] getRow(){
         return this.row;
     }
 
-    public void setRow(char[] row){
+    public void setRow(int[] row){
         this.row = row;
     }
 

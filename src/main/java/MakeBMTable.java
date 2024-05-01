@@ -29,13 +29,9 @@ public class MakeBMTable {
         SkipTable skipTable = new SkipTable(stringToSearch, uniqueLetters);
         skipTable.buildEmptyTable();
 
-        // DELETE LATER. Testing empty table
-        for(int i = 0; i < skipTable.getNumRowsInTable(); i++){
-            skipTable.getSkipTable().get(i).printRow();
-        }
-
 
         // Fill table
+        skipTable.fillTable();
         // Go down a column, starting from the last column, looping to the first column. 
         // To go down a column, look at the same index of all the arrays.
 
@@ -45,7 +41,12 @@ public class MakeBMTable {
         // if current substring has no earlier instances of same substring, skip by max number to skip
 
         // After going down a column
-        // Calculate make number to skip
+        // Calculate max number to skip
+
+        // DELETE LATER. Testing table
+        for(int i = 0; i < skipTable.getNumRowsInTable(); i++){
+            skipTable.getSkipTable().get(i).printRow();
+        }
 
 
         // Output table

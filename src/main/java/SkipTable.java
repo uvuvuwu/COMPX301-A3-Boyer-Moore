@@ -45,8 +45,6 @@ public class SkipTable {
      * fillTable fills the skip table
      */
     public void fillTable(){
-        // TODO complete fillTable
-
         int maxNumToSkip = stringToSearch.length();
 
         // Go down a column, starting from the last column, looping to the first column. 
@@ -55,7 +53,7 @@ public class SkipTable {
             fillColumn(i, maxNumToSkip);
             // After going down a column
             // Calculate max number to skip
-            maxNumToSkip = calcMaxNumToSkip();
+            maxNumToSkip = calcMaxNumToSkip(i, maxNumToSkip);
         }
         
     }
@@ -105,10 +103,17 @@ public class SkipTable {
         }
     }
 
-    public int calcMaxNumToSkip(){
-        // TODO complete function
-
-        int maxNumToSkip = 6;
+    public int calcMaxNumToSkip(int column, int maxNumToSkip){
+        // Does the current column to end of stringToSearch match the start of stringToSearch
+        // If yes, update max num to skip
+        // else return original int
+        String end = stringToSearch.substring(column);
+        String start = stringToSearch.substring(0, 0 + end.length());
+        if(end.equals(start)){
+            maxNumToSkip = stringToSearch.length() - end.length();
+            return maxNumToSkip;
+        }
+        
         return maxNumToSkip;
     }
 

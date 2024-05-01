@@ -30,18 +30,9 @@ public class MakeBMTable {
         skipTable.buildEmptyTable();
 
 
-        // Fill table
+        // Fill the empty table
         skipTable.fillTable();
-        // Go down a column, starting from the last column, looping to the first column. 
-        // To go down a column, look at the same index of all the arrays.
 
-        // When going down a column, check:
-        // if current string(character) match what we’re looking for, input 0
-        // if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
-        // if current substring has no earlier instances of same substring, skip by max number to skip
-
-        // After going down a column
-        // Calculate max number to skip
 
         // DELETE LATER. Testing table
         for(int i = 0; i < skipTable.getNumRowsInTable(); i++){

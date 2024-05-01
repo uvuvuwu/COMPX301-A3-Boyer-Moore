@@ -1,3 +1,6 @@
+// Name: Daniel Su  |  ID: 1604960
+// Name: Alma Walmsley  |  ID: 1620155
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.File;
@@ -19,6 +22,7 @@ public class MakeBMTable {
             System.exit(0);
         }
 
+        // Store arguments given by user
         String stringToSearch = args[0];
         String skipTableFileName = args[1];
 
@@ -49,13 +53,17 @@ public class MakeBMTable {
         return uniqueLettersList;
     }
 
+    /*
+     * outputTable writes the generated skipTable out to a file
+     */
     public static void outputTable(SkipTable skipTable, String skipTableFileName){
+        // Stores the strings to output to skip table
         ArrayList<String> rows = new ArrayList<>();
         String tempRow = "";
 
         // Generate first row of skip table 
         tempRow = "*";
-        for(int i = 0; i < skipTable.getNumColums(); i++){
+        for(int i = 0; i < skipTable.getNumColumns(); i++){
             tempRow = tempRow + "," + skipTable.getStringToSearch().charAt(i);
         }
         rows.add(tempRow);
@@ -64,19 +72,18 @@ public class MakeBMTable {
         int tableNumRows = skipTable.getNumRowsInTable();
         for(int i = 0; i < tableNumRows; i++){
             tempRow = Character.toString(skipTable.getSkipTable().get(i).getRowCharacter());
-            for(int j = 0; j < skipTable.getNumColums(); j++){
+            for(int j = 0; j < skipTable.getNumColumns(); j++){
                 tempRow = tempRow + "," + skipTable.getSkipTable().get(i).getRow()[j];
             }
             rows.add(tempRow);
         }
 
+        // Print the rows out onto console
         for(int i = 0; i < rows.size(); i++){
             System.out.println(rows.get(i));
         }
 
-
-        // Generate a file
-        // print rows to the file
+        // Generate a file and write the rows to the file
         try {
             File file = new File(skipTableFileName);
             file.createNewFile();
@@ -84,6 +91,7 @@ public class MakeBMTable {
 
             for(int i = 0; i < rows.size(); i++){
                 myWriter.write(rows.get(i));
+                // Go to new line except on the last row to write
                 if(i != rows.size() - 1){
                     myWriter.newLine();
                 }

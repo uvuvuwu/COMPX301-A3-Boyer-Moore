@@ -1,5 +1,11 @@
+// Name: Daniel Su  |  ID: 1604960
+// Name: Alma Walmsley  |  ID: 1620155
+
 import java.util.ArrayList;
 
+/*
+ * SkipTable class is a SkipTable object to be used in MakeBMTable
+ */
 public class SkipTable {
     private String stringToSearch;
     private ArrayList<Character> uniqueLetters;
@@ -33,45 +39,46 @@ public class SkipTable {
         tableRows.add(skipTableRow);
     }
 
+    /*
+     * getSkipTable returns the ArrayList of SkipTableRow objects
+     */
     public ArrayList<SkipTableRow> getSkipTable(){
         return this.tableRows;
     }
 
+
+    /*
+     * getNumRowsInTable returns the number of rows in the table
+     */
     public int getNumRowsInTable(){
         return this.numRowsInTable;
     }
 
     /*
-     * fillTable fills the skip table
+     * fillTable fills an empty skip table
      */
     public void fillTable(){
         int maxNumToSkip = stringToSearch.length();
 
-        // Go down a column, starting from the last column, looping to the first column. 
-        // To go down a column, look at the same index of all the arrays.
+        // Go down a column, starting from the last column, looping to the first column. Fill each of these columns
         for(int i = stringToSearch.length() - 1; i >= 0; i--){
             fillColumn(i, maxNumToSkip);
-            // After going down a column
-            // Calculate max number to skip
+            // After going down a column, recalculate max number to skip
             maxNumToSkip = calcMaxNumToSkip(i, maxNumToSkip);
         }
-        
     }
 
     /*
-     * fillColumn fills column 'column' in the skip table 
+     * fillColumn fills a specified column in the skip table 
      */
     public void fillColumn(int column, int maxNumToSkip){
-        // When going down a column, check:
-        // if current string(character) match what we’re looking for, input 0
-        // if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
-        // if current substring has no earlier instances of same substring, skip by max number to skip
-
         String currSubString = "";
         boolean hasInput = false;
 
+        // Loop through all the rows, fill the rows at position 'column' with their skip numbers
         for(int i = 0; i < tableRows.size(); i++){
             SkipTableRow tableRow = tableRows.get(i);
+            // If the row is '*', any letter not in the string to search for, set skip number to max number to skip
             if(tableRow.getOther() == true){
                 int[] row = tableRow.getRow();
                 row[column] = maxNumToSkip;
@@ -79,7 +86,7 @@ public class SkipTable {
                 hasInput = true;
             }
             else{
-                // if current string(character) match what we’re looking for, input 0
+                // If current character match what we’re looking for, skip by 0
                 if(tableRow.getRowCharacter() == stringToSearch.charAt(column)){
                     int[] row = tableRow.getRow();
                     row[column] = 0;
@@ -87,34 +94,38 @@ public class SkipTable {
                     hasInput = true;
                 }
 
-                // if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
                 char currentLetter = tableRow.getRowCharacter();
                 currSubString = updateCurrentSubString(currentLetter, column);
 
                 int moveBackDistance = moveBackDistance(currSubString);
-                // if current substring has no earlier instances of same substring, skip by max number to skip
+                // If current substring has no earlier instances of same substring, skip by max number to skip
+                // If hasInput == true, there is already a number there, don't overwrite it
                 if(moveBackDistance == -1 && hasInput == false){
                     int[] row = tableRow.getRow();
                     row[column] = maxNumToSkip;
                     tableRow.setRow(row);
                     hasInput = true;
                 }
-                // else if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
+                // Else if current substring (from current character to end) has an earlier instance of same substring, skip by current distance to the earlier instance distance
+                // If hasInput == true, there is already a number there, don't overwrite it
                 else if(moveBackDistance > -1 && hasInput == false) {
                     int[] row = tableRow.getRow();
                     row[column] = moveBackDistance;
                     tableRow.setRow(row);
                     hasInput = true;
                 }
+                // Set hasInput to false for next row
                 hasInput = false;
             }
         }
     }
 
+    /*
+     * calcMaxNumToSkip calculates and returns the maximum skip number for a column
+     */
     public int calcMaxNumToSkip(int column, int maxNumToSkip){
-        // Does the current column to end of stringToSearch match the start of stringToSearch
-        // If yes, update max num to skip
-        // else return original int
+        // If the current column to end of stringToSearch match the start of stringToSearch, update max number to skip
+        // If it doesn't match, return original maxNumToSkip
         String end = stringToSearch.substring(column);
         String start = stringToSearch.substring(0, 0 + end.length());
         if(end.equals(start)){
@@ -125,13 +136,16 @@ public class SkipTable {
         return maxNumToSkip;
     }
 
+    /*
+     * moveBackDistance calculates and returns the distance a substring needs to move back to find a previous occurrence of itself in stringToSearch
+     */
     public int moveBackDistance(String currSubString){
-        int moveBackDistance = 0;
-
         // Take currsubstring, comparing against the substring at the index before current. 
         // E.g. if current substring is at index 3, compare current substring with substring at index 2. 
         // Keep comparing against index -= 1 until there is a substring match. However many spaces currsubstring went back by is the move back distance.
-        // If after entire loop there was no match, return movebackdistance of -1
+        // If after entire loop there was no match, return moveBackDistance of -1
+
+        int moveBackDistance = 0;
 
         // Calculate the number of columns to look through
         int timesToLoopBy = stringToSearch.length() - currSubString.length();
@@ -150,7 +164,7 @@ public class SkipTable {
 
     /*
      * updateCurrentSubString returns the current substring,
-     * which is the current character + the substring from column (exclusive) to end of stringToSearch
+     * which is the current character + the substring from column (exclusive) to end of stringToSearch (inclusive)
      */
     public String updateCurrentSubString(char currentLetter, int column){
         // Add current letter to rest of the end of string
@@ -161,10 +175,16 @@ public class SkipTable {
         return currentSubString;
     }
 
-    public int getNumColums(){
+    /*
+     * getNumColums returns the number of columns there are in the skip table
+     */
+    public int getNumColumns(){
         return this.stringToSearch.length();
     }
 
+    /*
+     * getStringToSearch returns the string to search in the skip table
+     */
     public String getStringToSearch(){
         return this.stringToSearch;
     }

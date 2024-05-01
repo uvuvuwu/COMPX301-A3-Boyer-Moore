@@ -7,11 +7,13 @@ public class SkipTableRow {
     private int rowLength;
     private char rowCharacter;
     private int[] row;
+    private boolean other;
 
-    public SkipTableRow(int rowLength, char rowCharacter){
+    public SkipTableRow(int rowLength, char rowCharacter, boolean other){
         this.rowLength = rowLength;
         this.rowCharacter = rowCharacter;
         this.row = new int[rowLength];
+        this.other = other;
     }
 
     public int getRowLength(){
@@ -40,5 +42,9 @@ public class SkipTableRow {
 
     public void printRow(){
         System.out.println(rowCharacter + " " + Arrays.toString(row));
+    }
+
+    public boolean getOther(){
+        return this.other;
     }
 }

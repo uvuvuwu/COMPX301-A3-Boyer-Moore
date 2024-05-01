@@ -25,11 +25,11 @@ public class SkipTable {
         numRowsInTable = uniqueLetters.size() + 1; 
         // Create the rows for each unique letter
         for(int i = 0; i < numRowsInTable - 1; i++){
-            SkipTableRow skipTableRow = new SkipTableRow(stringToSearch.length(), uniqueLetters.get(i));
+            SkipTableRow skipTableRow = new SkipTableRow(stringToSearch.length(), uniqueLetters.get(i), false);
             tableRows.add(skipTableRow);
         }
         // Create row for '*' (Any other letter)
-        SkipTableRow skipTableRow = new SkipTableRow(stringToSearch.length(), '*');
+        SkipTableRow skipTableRow = new SkipTableRow(stringToSearch.length(), '*', true);
         tableRows.add(skipTableRow);
     }
 
@@ -72,34 +72,42 @@ public class SkipTable {
 
         for(int i = 0; i < tableRows.size(); i++){
             SkipTableRow tableRow = tableRows.get(i);
-            // if current string(character) match what we’re looking for, input 0
-            if(tableRow.getRowCharacter() == stringToSearch.charAt(column)){
-                int[] row = tableRow.getRow();
-                row[column] = 0;
-                tableRow.setRow(row);
-                hasInput = true;
-            }
-
-            // if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
-            char currentLetter = tableRow.getRowCharacter();
-            currSubString = updateCurrentSubString(currentLetter, column);
-
-            int moveBackDistance = moveBackDistance(currSubString);
-            // if current substring has no earlier instances of same substring, skip by max number to skip
-            if(moveBackDistance == -1 && hasInput == false){
+            if(tableRow.getOther() == true){
                 int[] row = tableRow.getRow();
                 row[column] = maxNumToSkip;
                 tableRow.setRow(row);
                 hasInput = true;
             }
-            // else if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
-            else if(moveBackDistance > -1 && hasInput == false) {
-                int[] row = tableRow.getRow();
-                row[column] = moveBackDistance;
-                tableRow.setRow(row);
-                hasInput = true;
+            else{
+                // if current string(character) match what we’re looking for, input 0
+                if(tableRow.getRowCharacter() == stringToSearch.charAt(column)){
+                    int[] row = tableRow.getRow();
+                    row[column] = 0;
+                    tableRow.setRow(row);
+                    hasInput = true;
+                }
+
+                // if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
+                char currentLetter = tableRow.getRowCharacter();
+                currSubString = updateCurrentSubString(currentLetter, column);
+
+                int moveBackDistance = moveBackDistance(currSubString);
+                // if current substring has no earlier instances of same substring, skip by max number to skip
+                if(moveBackDistance == -1 && hasInput == false){
+                    int[] row = tableRow.getRow();
+                    row[column] = maxNumToSkip;
+                    tableRow.setRow(row);
+                    hasInput = true;
+                }
+                // else if current substring (from curr character to end) has an earlier instance of same substring, input move back by that much
+                else if(moveBackDistance > -1 && hasInput == false) {
+                    int[] row = tableRow.getRow();
+                    row[column] = moveBackDistance;
+                    tableRow.setRow(row);
+                    hasInput = true;
+                }
+                hasInput = false;
             }
-            hasInput = false;
         }
     }
 

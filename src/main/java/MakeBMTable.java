@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
-import java.util.Arrays; 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,26 +23,14 @@ public class MakeBMTable {
         String skipTableFileName = args[1];
 
         // Build empty table
-        // Find all the unique letters in the string
-        // Find the number of unique letters in the string (numUniqueLetters)
-        // Create numUniqueLetters + 1 number of arrays, array length initial string
         ArrayList<Character> uniqueLetters = findAllUniqueLetters(stringToSearch);
-        // Create empty skip table
         SkipTable skipTable = new SkipTable(stringToSearch, uniqueLetters);
         skipTable.buildEmptyTable();
-
 
         // Fill the empty table
         skipTable.fillTable();
 
-
-        // DELETE LATER. Testing table
-        // for(int i = 0; i < skipTable.getNumRowsInTable(); i++){
-        //     skipTable.getSkipTable().get(i).printRow();
-        // }
-
-
-        // TODO Output table
+        // Output the table to a file, file name specified by the user
         outputTable(skipTable, skipTableFileName);
     }
 
@@ -84,9 +70,9 @@ public class MakeBMTable {
             rows.add(tempRow);
         }
 
-        // for(int i = 0; i < rows.size(); i++){
-        //     System.out.println(rows.get(i));
-        // }
+        for(int i = 0; i < rows.size(); i++){
+            System.out.println(rows.get(i));
+        }
 
 
         // Generate a file

@@ -42,14 +42,13 @@ public class MakeBMTable {
      * findAllUniqueLetters finds and returns a list of all the unique letters in a passed in string
      */
     public static ArrayList<Character> findAllUniqueLetters(String stringToSearch){
-        // Go through stringToSearch, put each into hash map
-        HashMap<Character, Character> hashMap = new HashMap<>();
-        for(int i = 0; i < stringToSearch.length(); i++){
-            Character c = stringToSearch.charAt(i);
-            hashMap.put(c, c);
+        ArrayList<Character> uniqueLettersList = new ArrayList<>();
+        for (int i = 0; i < stringToSearch.length(); i++) {
+            char c = stringToSearch.charAt(i);
+            if (!uniqueLettersList.contains(c)) {
+                uniqueLettersList.add(c);
+            }
         }
-        // Turn hashmap into list, return the list
-        ArrayList<Character> uniqueLettersList = new ArrayList<Character>(hashMap.values());
         return uniqueLettersList;
     }
 
@@ -76,11 +75,6 @@ public class MakeBMTable {
                 tempRow = tempRow + "," + skipTable.getSkipTable().get(i).getRow()[j];
             }
             rows.add(tempRow);
-        }
-
-        // Print the rows out onto console
-        for(int i = 0; i < rows.size(); i++){
-            System.out.println(rows.get(i));
         }
 
         // Generate a file and write the rows to the file

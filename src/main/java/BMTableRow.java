@@ -1,3 +1,5 @@
+// Name: Daniel Su  |  ID: 1604960
+// Name: Alma Walmsley  |  ID: 1620155
 
 /*
  * BMTableRow.java

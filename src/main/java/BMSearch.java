@@ -1,3 +1,6 @@
+// Name: Daniel Su  |  ID: 1604960
+// Name: Alma Walmsley  |  ID: 1620155
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -6,7 +9,7 @@ import java.io.OutputStreamWriter;
 
 
 /*
- * BMSearch.java searches for a string in a file using the Boyer-Moore algorithm
+ * BMSearch.java searches for a string in a file using the Boyer-Moore skip table.
  * It parses a BMTable file to create a BMTable object, then searches a file for the search string
  * using the BMTable object. It outputs the lines that contain the search string.
  */
@@ -156,7 +159,8 @@ public class BMSearch {
                 // if we don't have to skip, we have a full match
                 if (skipAmount == 0) {
                     // write the line to stdout
-                    writer.write(line + "\n");
+                    writer.write(line);
+                    writer.newLine();
                     // stop searching this line
                     break;
                 }

@@ -24,6 +24,13 @@ public class MakeBMTable {
             System.out.println("Usage: java MakeBMTable <searchString> <outputTable.txt>");
             System.exit(1);
         }
+        if(args[0].equals("")){
+            System.out.println("Cannot search for an empty pattern");
+            // Make sure the output file is empty
+            BufferedWriter writer = new BufferedWriter(new FileWriter(args[1]));
+            writer.close();
+            System.exit(1);
+        }
         // Create a new BMTable object
         BMTable table = new BMTable(args[0]);
         // Populate the BMTable object with skip amounts

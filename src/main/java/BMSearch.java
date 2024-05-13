@@ -78,6 +78,10 @@ public class BMSearch {
      * @return: The search string
      */
     public static String parseSearchString(String line) {
+        if(line == null){
+            System.out.println("Search failed, the skip table is empty");
+            System.exit(1);
+        }
         // Split the line by commas
         String[] splitString = line.split(",");
         // Create a StringBuilder to hold the joined string

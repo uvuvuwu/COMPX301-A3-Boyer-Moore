@@ -82,14 +82,12 @@ public class BMSearch {
             System.out.println("Search failed, the skip table is empty");
             System.exit(1);
         }
-        // Split the line by commas
-        String[] splitString = line.split(",");
         // Create a StringBuilder to hold the joined string
         StringBuilder joinedString = new StringBuilder();
-        // For each element in the split array, append the first character to the StringBuilder
-        // (skipping the first element)
-        for (int i = 1; i < splitString.length; i++) {
-            joinedString.append(splitString[i].charAt(0));
+        // Read every second character from the line (split by commas)
+        for (int i = 2; i <= line.length(); i += 2) {
+            // Append the character to the StringBuilder
+            joinedString.append(line.charAt(i));
         }
         // Return the joined string
         return joinedString.toString();
@@ -104,8 +102,8 @@ public class BMSearch {
      * @return: An array of integers representing the skip amounts
      */
     public static int[] parseSkipAmounts(String BMTableLine) {
-        // Split the line by commas
-        String[] splitString = BMTableLine.split(",");
+        // Split the values by commas
+        String[] splitString = BMTableLine.substring(1).split(",");
         // Create a char array to hold the values
         int[] skipAmounts = new int[splitString.length - 1];
         // For each element in the split array, parse it as an integer and add it to the char array
